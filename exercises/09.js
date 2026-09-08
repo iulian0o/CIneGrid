@@ -47,3 +47,5 @@ const tmdbMovieNoPoster = { title: "Obscure Film", poster_path: null };
 
 console.log(formatPosterUrl(tmdbMovie));         // https://image.tmdb.org/t/p/w500/oYuLEt3...
 console.log(formatPosterUrl(tmdbMovieNoPoster)); // https://placehold.co/500x750?text=No+Image
+
+// comment
