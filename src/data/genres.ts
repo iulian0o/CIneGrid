@@ -1,4 +1,4 @@
-export const GENRES = {
+export const GENRES: Record<number, string> = {
   28: "Action",
   12: "Adventure",
   16: "Animation",
@@ -20,7 +20,7 @@ export const GENRES = {
   37: "Western"
 };
 
-export function getGenreNames(genreIds: number[] = []) {
+export function getGenreNames(genreIds: number[] = []): string[] {
   if (!genreIds || !genreIds.length) return ["General"];
   return genreIds.map(id => GENRES[id] || "Other");
 }
