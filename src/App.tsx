@@ -1,29 +1,47 @@
 import { useState } from "react";
-import type { Movie } from "./types.ts";
-import { SAMPLE_MOVIES } from "./data/sampleMovies.ts";
-import SearchBar from "./components/SearchBar.tsx";
-import MovieList from "./components/MovieList.tsx";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import SearchBar from "./components/SearchBar";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
-function App() {
-  const [movies] = useState<Movie[]>(SAMPLE_MOVIES);
-  const [query, setQuery] = useState("");
-  const [minRating, setMinRating] = useState(0);
+const App = () => {
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredMovies = movies.filter((m) =>
-    m.title.toLowerCase().includes(query.toLowerCase()),
+  return (
+    <BrowserRouter>
+      <div className="app-layout">
+        <header className="site-header">
+          <div className="header-inner">
+            <div className="header-left">
+              <div className="brand-logo">
+                <div className="logo-dot"></div>
+                <span className="logo-text">CINE&middot;GRID</span>
+              </div>
+              <nav className="header-nav">
+                <NavLink to="/" end>Home</NavLink>
+                <NavLink to="/about">About</NavLink>
+              </nav>
+            </div>
+
+            <div className="header-search">
+              <SearchBar query={searchQuery} onChange={setSearchQuery} />
+            </div>
+
+            <div className="header-actions">
+              <button className="btn-icon-label">Watchlist 0</button>
+              <button className="btn-icon-label">icon here</button>
+            </div>
+          </div>
+        </header>
+        <Routes>
+          <Route path="/" element={<HomePage searchQuery={searchQuery} />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
-
-return (
-  <div className="app-layout">
-    <header className="site-header">
-      <h1>CineGrid</h1>
-      <SearchBar query={query} onChange={setQuery} />
-    </header>
-    <main className="main-container">
-      <MovieList movies={filteredMovies} />
-    </main>
-  </div>
-);
-}
+};
 
 export default App;
