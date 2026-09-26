@@ -16,7 +16,7 @@ const App = () => {
             <div className="header-left">
               <div className="brand-logo">
                 <div className="logo-dot"></div>
-                <span className="logo-text">CINE&middot;GRID</span>
+                <h1 className="logo-text">CINE&middot;GRID</h1>
               </div>
               <nav className="header-nav">
                 <NavLink to="/" end>Home</NavLink>
