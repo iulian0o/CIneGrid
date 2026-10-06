@@ -3,10 +3,10 @@ import type { Movie } from '../types.ts';
 
 interface MovieListProps {
   movies: Movie[];
-  onClick?: (movie: Movie) => void;
+  onMovieClick?: (movie: Movie) => void;
 }
 
-export default function MovieList({ movies, onClick }: MovieListProps) {
+export default function MovieList({ movies, onMovieClick }: { movies: Movie[], onMovieClick: (movie: Movie) => void}) {
   if (movies.length === 0) {
     return <p>No movies found.</p>
   }
@@ -14,7 +14,7 @@ export default function MovieList({ movies, onClick }: MovieListProps) {
   return (
     <div className="movies-grid">
       {movies.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} onClick={onClick} />
+        <MovieCard key={movie.id} movie={movie} onMovieClick={onMovieClick} />
       ))}
     </div>
   );

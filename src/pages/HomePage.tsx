@@ -1,20 +1,34 @@
+import { useState } from 'react';
+import type { Movie } from "../types.ts";
 import { useMovies } from "../hooks/useMovies.ts";
 import MovieList from '../components/MovieList';
+import MovieModal from "../components/MovieModal";
+import SearchBar from "../components/SearchBar";
 
 const apiUrl = `${import.meta.env.VITE_TMDB_BASE_URL}/movie/popular?language=en-US&page=1`
 
 export default function HomePage({ searchQuery }: { searchQuery: string }) {
   const { movies, isLoading, error } = useMovies();
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-    const filteredMovies = movies.filter((m) =>
+  const filteredMovies = movies.filter((m) =>
     m.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+
+  console.log("selectedMovie:", selectedMovie);
 
   return (
     <main className="main-container">
       {isLoading && <p>Loading...</p>}
       {error && <p>Somethong went wrong: {error}</p>}
-      {!isLoading && !error && <MovieList movies={filteredMovies} />}
+      {!isLoading && !error && (
+        <>
+          <MovieList movies={filteredMovies} onMovieClick={setSelectedMovie} />
+          {selectedMovie && (
+            <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />
+          )}
+        </>
+      )}
     </main>
   )
 }

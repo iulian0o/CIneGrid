@@ -5,10 +5,10 @@ import { getGenreNames } from "../data/genres.ts";
 
 interface MovieCardProps {
   movie: Movie;
-  onClick?: (movie: Movie) => void;
+  onMovieClick?: (movie: Movie) => void;
 }
 
-export default function MovieCard({ movie, onClick }: MovieCardProps) {
+export default function MovieCard({ movie, onMovieClick }: MovieCardProps) {
   const [isFav, setIsFav] = useState(false);
 
   const posterSrc = getPosterUrl(movie.poster_path);
@@ -20,7 +20,7 @@ export default function MovieCard({ movie, onClick }: MovieCardProps) {
     <article
       className="movie-card"
       tabIndex={0}
-      onClick={() => onClick?.(movie)}
+      onClick={() => onMovieClick?.(movie)}
     >
       <div className="poster-wrapper">
         <img
@@ -51,7 +51,15 @@ export default function MovieCard({ movie, onClick }: MovieCardProps) {
               }}
             ></button>
           </div>
-          <span className="quick-view-hint">View Details</span>
+          <span 
+            className="quick-view-hint"
+            onClick={(e) => {e.stopPropagation();
+              onMovieClick?.(movie)
+            }}
+            role="button"
+            tabIndex={0}
+          >
+            View Details</span>
         </div>
       </div>
       <div className="movie-card-info">
