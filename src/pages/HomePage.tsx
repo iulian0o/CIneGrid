@@ -3,7 +3,6 @@ import type { Movie } from "../types.ts";
 import { useMovies } from "../hooks/useMovies.ts";
 import MovieList from '../components/MovieList';
 import MovieModal from "../components/MovieModal";
-import SearchBar from "../components/SearchBar";
 
 const apiUrl = `${import.meta.env.VITE_TMDB_BASE_URL}/movie/popular?language=en-US&page=1`
 
@@ -14,8 +13,6 @@ export default function HomePage({ searchQuery }: { searchQuery: string }) {
   const filteredMovies = movies.filter((m) =>
     m.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
-
-  console.log("selectedMovie:", selectedMovie);
 
   return (
     <main className="main-container">

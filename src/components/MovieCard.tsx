@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useAppContext } from '../context/AppContext';
 import type { Movie } from "../types.ts";
 import { getPosterUrl, getPlaceholderPoster } from "../data/sampleMovies.ts";
 import { getGenreNames } from "../data/genres.ts";
@@ -9,7 +9,8 @@ interface MovieCardProps {
 }
 
 export default function MovieCard({ movie, onMovieClick }: MovieCardProps) {
-  const [isFav, setIsFav] = useState(false);
+  const { toggleFavorite, isFavorite } = useAppContext();
+  const isFav = isFavorite(movie.id);
 
   const posterSrc = getPosterUrl(movie.poster_path);
   const year = movie.release_date ? movie.release_date.substring(0, 4) : "TBA";
@@ -42,18 +43,28 @@ export default function MovieCard({ movie, onMovieClick }: MovieCardProps) {
             </span>
             <button
               className={`favorite-btn ${isFav ? "is-favorite" : ""}`}
-              aria-label={
-                isFav ? "Remove from favourites" : "Add to favourites"
-              }
+              aria-label={isFav ? "Remove from favourites" : "Add to favourites"}
               onClick={(e) => {
                 e.stopPropagation();
-                setIsFav((prev) => !prev);
+                toggleFavorite(movie);
               }}
-            ></button>
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill={isFav ? "currentColor" : "none"}
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
           </div>
-          <span 
+          <span
             className="quick-view-hint"
-            onClick={(e) => {e.stopPropagation();
+            onClick={(e) => {
+              e.stopPropagation();
               onMovieClick?.(movie)
             }}
             role="button"

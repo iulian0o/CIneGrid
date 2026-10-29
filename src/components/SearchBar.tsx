@@ -1,4 +1,4 @@
-interface SearchBarProps {
+export interface SearchBarProps {
   query: string;
   onChange: (query: string) => void;
 }
