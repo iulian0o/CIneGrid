@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: Copy environment file
-        run: cp .env.example .env
+        run: .env
 
       # ── Static checks ───────────────────────────────────────────────────────
 
